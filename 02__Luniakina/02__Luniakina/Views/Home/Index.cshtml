@@ -1,0 +1,38 @@
+﻿@model _02__Luniakina.Models.Person
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Person";
+}
+
+
+<p>Hello, write some information about you!</p>
+
+<form method="post" asp-controller="Home" asp-action="Index" id="personForm" class="formm">
+    @Html.ValidationSummary()
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="namee" />
+    </div>
+
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="lastnamee" />
+    </div>
+
+    <div>
+        <label asp-for="BirthDate"></label>
+        <input asp-for="BirthDate" class="birthdatee" />
+    </div>
+
+    <div>
+        <label asp-for="EMail"></label>
+        <input asp-for="EMail" class="emaill" />
+    </div>
+
+    <div>
+        <button type="submit" form="personForm" disabled class="submitt">Proceed</button>
+    </div>
+
+</form>

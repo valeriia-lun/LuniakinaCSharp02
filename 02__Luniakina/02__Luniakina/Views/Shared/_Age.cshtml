@@ -1,0 +1,62 @@
+﻿@using _02__Luniakina.Models;
+@model _02__Luniakina.Models.Person
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Person";
+}
+@section Age {
+    <div>
+        <h1>Hello, @Model.Name!</h1>
+        <p>
+            @{
+                int age = Person.CalculateAge(Model.BirthDate);
+                if (age > 0 && age <= 135)
+                {
+                    String ageS = Person.CalculateAge(Model.BirthDate).ToString();
+                    <label>Your age: @ageS</label><br />
+
+                    if (Person.IsBirthday(Model.BirthDate))
+                    {
+                        <label>Happy Birthday!!! You are awesome!</label><br />
+                    }
+                }
+                else
+                {
+                    <script type="text/javascript">window.onload = function () {
+                            alert("Wrong date");
+                        };</script>
+                }
+
+                <label>Your name: @Model.Name</label><br />
+
+                <label>Your date of birth: @Model.BirthDate.ToLongDateString()</label><br />
+
+                <label>Your lastname: @Model.LastName</label><br />
+
+                <label>Your zodiac sign: @Person.SunSign(Model.BirthDate)</label><br />
+
+                <label>Your Chinese zodiac sign: @Person.ChineseZodiacSign(Model.BirthDate)</label><br />
+
+                <label>
+                    You are
+                    @if (!Person.IsAdult(Model.BirthDate))
+                    {
+                        <label> not </label>
+                    }
+                    adult!
+                </label><br />
+            }
+
+            <label>
+                Today is
+                @if (!Person.IsBirthday(Model.BirthDate))
+                {
+                    <label> not </label>
+                }
+                your birthday!
+            </label><br />
+        </p>
+
+    </div>
+}
+

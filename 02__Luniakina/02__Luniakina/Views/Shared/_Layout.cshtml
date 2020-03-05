@@ -1,0 +1,35 @@
+﻿@using _02__Luniakina.Models
+@model Person
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script type='text/javascript' src='http://code.jquery.com/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+            asp-fallback-src="~/Content/jquery.min.js"
+            asp-fallback-test="window.jQuery"></script>
+    <script type='text/javascript'>$(window).ready(function () {
+            $(".formm").on("change input",
+                [".namee", ".lastnamee", ".emaill", ".birthdatee"],
+                function () {
+                    if ($(".namee").val() !== "" &&
+                        $(".lastnamee").val() !== "" &&
+                        $(".emaill").val() !== "" &&
+                        $(".birthdatee").val() !== "") {
+
+                        console.log("completed");
+                        $(".submitt").prop("disabled", false);
+                    }
+                });
+        });</script>
+</head>
+<body>
+    <div>
+        @RenderBody()
+       
+        @RenderSection("Age",false)
+    </div>
+</body>
+</html>
