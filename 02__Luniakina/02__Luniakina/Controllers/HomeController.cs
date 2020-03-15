@@ -16,16 +16,29 @@ namespace _02__Luniakina.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Person person)
+        public IActionResult IndexPost()
         {
-           if(Person.CalculateAge(person.BirthDate) >= 135) {
-                ModelState.AddModelError("Error", "WRONG DATE! Write the correct date of birth, please!");
-                return View();
-            } else if (ModelState.IsValid)
-                return View("_Age", person);
-            else
-                return View();
+            if (ModelState.IsValid)
+            {
+                Person person = new Person(HttpContext.Request.Form["Name"],
+                                          HttpContext.Request.Form["LastName"],
+                                          HttpContext.Request.Form["BirthDate"],
+                                          HttpContext.Request.Form["EMail"]);
+                try
+                {
+                    person.Validate();
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("Error", e.Message);
+                    return View("Index");
+                }
+
+                    return View("_Age", person);
+            }
+                else
+                    return View("Index");
         }
     }
-    
+  
 }

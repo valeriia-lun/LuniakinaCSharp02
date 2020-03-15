@@ -1,12 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _02__Luniakina.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace _02__Luniakina.Models
 {
+    
     public class Person
     {
         [Required(ErrorMessage = "Please enter your name!")]
@@ -25,19 +29,29 @@ namespace _02__Luniakina.Models
 
         [Required(ErrorMessage = "Please enter your e-mail!")]
         [Display(Name = "E-mail: ")]
-        [EmailAddress(ErrorMessage = "Please enter a valid e-mail address!")]
+       // [EmailAddress(ErrorMessage = "Please enter a valid e-mail address!")]
         public string EMail { get; set; }
+
+        public int Age { get; set; }
+
+        public string ZodiacSunSign { get; set; }
+
+        public string ZodiacChineseSign { get; set; }
 
         public Person()
         {
         }
 
-        public Person(string name, string lastName, DateTime dateOfBirth, string email)
+        public Person(string name, string lastName, string dateOfBirth, string email)
         {
             this.Name = name;
-            this.BirthDate = dateOfBirth;
+            DateTime dt = DateTime.ParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            this.BirthDate = dt;
             this.LastName = lastName;
             this.EMail = email;
+            this.Age = CalculateAge(BirthDate);
+            this.ZodiacSunSign = SunSign(dt);
+            this.ZodiacChineseSign = ChineseZodiacSign(dt);
         }
 
         public Person(string name, string lastName, string email)
@@ -45,47 +59,33 @@ namespace _02__Luniakina.Models
             this.Name = name;
             this.LastName = lastName;
             this.EMail = email;
+            this.BirthDate = default;
+            this.Age = CalculateAge(BirthDate);
+            this.ZodiacSunSign = SunSign(BirthDate);
+            this.ZodiacChineseSign = ChineseZodiacSign(BirthDate);
+
         }
 
-        public Person(string name, string lastName, DateTime dateOfBirth)
+  /*      public Person(string name, string lastName, string dateOfBirth)
         {
             this.Name = name;
-            this.BirthDate = dateOfBirth;
+            DateTime dt = DateTime.ParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            this.BirthDate = dt;
             this.LastName = lastName;
-
+            this.ZodiacSunSign = SunSign(dt);
+            this.ZodiacChineseSign = ChineseZodiacSign(dt);
         }
-
-        enum ChineseSign
+        */
+        public void Validate()
         {
-            Rat,
-            Ox,
-            Tiger,
-            Rabbit,
-            Dragon,
-            Snake,
-            Horse,
-            Goat,
-            Monkey,
-            Rooster,
-            Dog,
-            Pig
+            if (DateTime.Today < BirthDate.Date) throw new BirthdayInTheFutureExc();
+            if (Age > 135) throw new TooOldExc();
+            var regex = new Regex(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+            + "@"
+            + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$");
+            if (!regex.IsMatch(EMail)) throw new WrongEMailExc();
         }
 
-        enum ZodiacSign
-        {
-            Aries,
-            Taurus,
-            Gemini,
-            Cancer,
-            Leo,
-            Virgo,
-            Libra,
-            Scorpio,
-            Sagittarius,
-            Capricorn,
-            Aquarius,
-            Pisces
-        }
         public static int CalculateAge(DateTime BirthDate)
         {
 
@@ -121,73 +121,73 @@ namespace _02__Luniakina.Models
             if (month == 12 && day >= 22 ||
                 month == 1 && day <= 22)
             {
-                return ZodiacSign.Capricorn.ToString();
+                return ZodiacSignEnumeration.Capricorn.ToString();
             }
 
             if (month == 1 && day >= 21 ||
                 month == 2 && day <= 18)
             {
-                return ZodiacSign.Aquarius.ToString();
+                return ZodiacSignEnumeration.Aquarius.ToString();
             }
 
             if (month == 2 && day >= 19 ||
                 month == 3 && day <= 20)
             {
-                return ZodiacSign.Pisces.ToString();
+                return ZodiacSignEnumeration.Pisces.ToString();
             }
 
             if (month == 3 && day >= 21 ||
                 month == 4 && day <= 20)
             {
-                return ZodiacSign.Aries.ToString();
+                return ZodiacSignEnumeration.Aries.ToString();
             }
 
             if (month == 4 && day >= 21 ||
                 month == 5 && day <= 20)
             {
-                return ZodiacSign.Taurus.ToString();
+                return ZodiacSignEnumeration.Taurus.ToString();
             }
 
             if (month == 5 && day >= 21 ||
                 month == 6 && day <= 21)
             {
-                return ZodiacSign.Gemini.ToString();
+                return ZodiacSignEnumeration.Gemini.ToString();
             }
 
             if (month == 6 && day >= 22 ||
                 month == 7 && day <= 22)
             {
-                return ZodiacSign.Cancer.ToString();
+                return ZodiacSignEnumeration.Cancer.ToString();
             }
 
             if (month == 7 && day >= 23 ||
                 month == 8 && day <= 23)
             {
-                return ZodiacSign.Leo.ToString();
+                return ZodiacSignEnumeration.Leo.ToString();
             }
 
             if (month == 8 && day >= 24 ||
                 month == 9 && day <= 23)
             {
-                return ZodiacSign.Virgo.ToString();
+                return ZodiacSignEnumeration.Virgo.ToString();
             }
 
             if (month == 9 && day >= 24 ||
                 month == 10 && day <= 23)
             {
-                return ZodiacSign.Libra.ToString();
+                return ZodiacSignEnumeration.Libra.ToString();
             }
 
             if (month == 10 && day >= 24 ||
                 month == 11 && day <= 22)
             {
-                return ZodiacSign.Scorpio.ToString();
+                return ZodiacSignEnumeration.Scorpio.ToString();
             }
 
             if (month == 11 && day >= 23 ||
                 month == 12 && day <= 21)
             {
-                return ZodiacSign.Sagittarius.ToString();
+                return ZodiacSignEnumeration.Sagittarius.ToString();
             }
 
             return "Error";
@@ -199,51 +199,51 @@ namespace _02__Luniakina.Models
             switch (BirthDate.Year % 12)
             {
                 case 0:
-                    return ChineseSign.Monkey.ToString();
+                    return ChineseSignEnumeration.Monkey.ToString();
                   
 
                 case 1:
-                    return ChineseSign.Rooster.ToString();
+                    return ChineseSignEnumeration.Rooster.ToString();
                    
 
                 case 2:
-                    return ChineseSign.Dog.ToString();
+                    return ChineseSignEnumeration.Dog.ToString();
                    
 
                 case 3:
-                    return ChineseSign.Pig.ToString();
+                    return ChineseSignEnumeration.Pig.ToString();
                    
 
                 case 4:
-                    return ChineseSign.Rat.ToString();
+                    return ChineseSignEnumeration.Rat.ToString();
                    
 
                 case 5:
-                    return ChineseSign.Ox.ToString();
+                    return ChineseSignEnumeration.Ox.ToString();
                    
 
                 case 6:
-                    return ChineseSign.Tiger.ToString();
+                    return ChineseSignEnumeration.Tiger.ToString();
                   
 
                 case 7:
-                    return ChineseSign.Rabbit.ToString();
+                    return ChineseSignEnumeration.Rabbit.ToString();
                    
 
                 case 8:
-                    return ChineseSign.Dragon.ToString();
+                    return ChineseSignEnumeration.Dragon.ToString();
                   
 
                 case 9:
-                    return ChineseSign.Snake.ToString();
+                    return ChineseSignEnumeration.Snake.ToString();
                    
 
                 case 10:
-                    return ChineseSign.Horse.ToString();
+                    return ChineseSignEnumeration.Horse.ToString();
                  
 
                 case 11:
-                    return ChineseSign.Goat.ToString();
+                    return ChineseSignEnumeration.Goat.ToString();
                     
 
             }

@@ -13,5 +13,9 @@
     <Folder Include="Controllers\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Shared\" />
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\SignsEnumeration.cs" />
   </ItemGroup>
 </Project>
