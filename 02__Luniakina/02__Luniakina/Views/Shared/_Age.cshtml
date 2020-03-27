@@ -1,5 +1,9 @@
 ﻿@using _02__Luniakina.Models;
 @model _02__Luniakina.Models.Person
+@using System.Web;
+@using System.Web.Helpers;
+@* @model IEnumerable<Person>  *@
+
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Person";
@@ -47,7 +51,53 @@
         </p>
 
     </div>
-}
+
+
+    <asp:GridView ID="GridView1" runat="server"
+                  DataSourceID="getEmployeesSDS" AutoGenerateColumns="False" DataKeyNames="EmployeeID">
+        <Columns>
+            <asp:BoundField DataField="EmployeeID" HeaderText="Id" />
+            <asp:BoundField DataField="FirstName" HeaderText="FirstName" />
+            <asp:BoundField DataField="LastName" HeaderText="LastName" />
+            <asp:BoundField DataField="BirthDate" HeaderText="BirthDate" />
+            <asp:BoundField DataField="Title" HeaderText="Title" />
+            <asp:BoundField DataField="City" HeaderText="City" />
+        </Columns>
+    </asp:GridView>
+    }
+
+    @* <div class="container">
+                @{
+                    var grid = new WebGrid(source: Model, defaultSort: "FirstName", rowsPerPage: 3);
+
+                }
+                @grid.GetHtml();
+            }
+
+            @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name).Titled("Name");
+                columns.Add(model => model.Surname).Titled("Surname");
+
+                columns.Add(model => model.Age).Titled("Age");
+                columns.Add(model => model.Birthday).Titled("Birth date");
+                columns.Add(model => model.IsWorking).Titled("Employed");
+
+        //popup part
+        columns.Add(model => $"<a  data-modal='' data-id=\"{model.Id}\"     href='PasswordRestUser/{model.Id}'      id=\"ss\"  asp-    action=\"PR\" asp-route-id=\"@item.Id\" class=\"btn     btn-info\" '> PR <span class='glyphicon      glyphicon-user'> </span> </a>").Encoded(false);
+
+            })
+            .Filterable()
+            .Sortable()
+            .Pageable()
+            )*@
+    @* @{
+            var grid = new WebGrid(Model, defaultSort: "Name");
+        }
+        @grid.GetHtml()*@
+    </div>
 
 
 

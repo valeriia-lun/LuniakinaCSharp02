@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 using _02__Luniakina.Exceptions;
 using System.Text.RegularExpressions;
 
+
 namespace _02__Luniakina.Models
 {
     
     public class Person
     {
+        public int ID { get; set; }
+
         [Required(ErrorMessage = "Please enter your name!")]
         [Display(Name = "Name: ")]
         public string Name { get; set; }
@@ -29,7 +32,6 @@ namespace _02__Luniakina.Models
 
         [Required(ErrorMessage = "Please enter your e-mail!")]
         [Display(Name = "E-mail: ")]
-       // [EmailAddress(ErrorMessage = "Please enter a valid e-mail address!")]
         public string EMail { get; set; }
 
         public int Age { get; set; }
@@ -48,7 +50,13 @@ namespace _02__Luniakina.Models
             DateTime dt = DateTime.ParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             this.BirthDate = dt;
             this.LastName = lastName;
+
+            var regex = new Regex(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+            + "@"
+            + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$");
+            if (!regex.IsMatch(email)) throw new WrongEMailExc();
             this.EMail = email;
+
             this.Age = CalculateAge(BirthDate);
             this.ZodiacSunSign = SunSign(dt);
             this.ZodiacChineseSign = ChineseZodiacSign(dt);
@@ -66,25 +74,6 @@ namespace _02__Luniakina.Models
 
         }
 
-  /*      public Person(string name, string lastName, string dateOfBirth)
-        {
-            this.Name = name;
-            DateTime dt = DateTime.ParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            this.BirthDate = dt;
-            this.LastName = lastName;
-            this.ZodiacSunSign = SunSign(dt);
-            this.ZodiacChineseSign = ChineseZodiacSign(dt);
-        }
-        */
-        public void Validate()
-        {
-            if (DateTime.Today < BirthDate.Date) throw new BirthdayInTheFutureExc();
-            if (Age > 135) throw new TooOldExc();
-            var regex = new Regex(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
-            + "@"
-            + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$");
-            if (!regex.IsMatch(EMail)) throw new WrongEMailExc();
-        }
 
         public static int CalculateAge(DateTime BirthDate)
         {
@@ -97,6 +86,8 @@ namespace _02__Luniakina.Models
             {
                 YearsPassed--;
             }
+            if (DateTime.Today < BirthDate.Date) throw new BirthdayInTheFutureExc();
+            if (YearsPassed > 135) throw new TooOldExc();
 
             return YearsPassed;
         }

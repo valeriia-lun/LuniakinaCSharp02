@@ -36,3 +36,12 @@
 /Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/obj/Debug/netcoreapp3.1/02__Luniakina.dll
 /Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/obj/Debug/netcoreapp3.1/02__Luniakina.pdb
 /Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/obj/Debug/netcoreapp3.1/02__Luniakina.csproj.CopyComplete
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/System.Web.Razor.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/Microsoft.Web.Helpers.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/System.Web.Helpers.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/System.Web.WebPages.Deployment.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/System.Web.WebPages.Razor.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/System.Web.WebPages.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/WebMatrix.Data.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/WebMatrix.WebData.dll
+/Users/Lera/Documents/GitHub/LuniakinaCSharp02/02__Luniakina/02__Luniakina/bin/Debug/netcoreapp3.1/Microsoft.Web.Infrastructure.dll

@@ -1,38 +1,67 @@
-﻿@model _02__Luniakina.Models.Person
+﻿@*@model _02__Luniakina.Models.Person*@
+@using _02__Luniakina.Models;
+@using System.Web;
+@using System.Web.Helpers;
+@using System.Web.Helpers;
+
+@model _02__Luniakina.Models.Users
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Person";
+
 }
 
 
-<p>Hello, write some information about you!</p>
-
-<form method="post" asp-controller="Home" asp-action="IndexPost" id="personForm" class="formm">
+<form asp-action="Index" asp-controller="Home" method="post" id="personForm" class="formm">
     @Html.ValidationSummary()
 
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="namee" />
-    </div>
+    <label><b>Name: </b></label>
+    <input class="namee" type="text" name="Name" /><br />
 
-    <div>
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="lastnamee" />
-    </div>
+    <label><b>Last Name: </b></label>
+    <input class="lastnamee" type="text" name="LastName" /><br />
 
-    <div>
-        <label asp-for="BirthDate"></label>
-        <input asp-for="BirthDate" class="birthdatee" />
-    </div>
+    <label><b>E-mail: </b></label>
+    <input class="emaill" type="email" name="EMail" /><br />
 
-    <div>
-        <label asp-for="EMail"></label>
-        <input asp-for="EMail" class="emaill" />
-    </div>
+    <label><b>Date of birth: </b></label>
+    <input class="birthdatee" type="date" name="BirthDate" /><br />
 
-    <div>
-        <button type="submit" form="personForm" disabled class="submitt">Proceed</button>
-    </div>
+    <button type="submit" form="personForm" disabled class="submitt">Proceed</button><br />
 
 </form>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Day of Birth</th>
+        <th>Age</th>
+        <th>Sun Sign</th>
+        <th>Chinese Sign</th>
+        <th>Is adult?</th>
+        <th>Is birthday today?</th>
+    </tr>
+    @foreach (var user in Model.UsersList)
+    {
+<tr>
+    <td>1</td>
+    <td>@user.Name</td>
+    <td>@user.LastName</td>
+    <td>@user.BirthDate.ToLongDateString()</td>
+    <td>@user.Age</td>
+    <td>@user.ZodiacSunSign</td>
+    <td>@user.ZodiacChineseSign</td>
+    <td>@Person.IsAdult(user.BirthDate)</td>
+    <td>@Person.IsBirthday(user.BirthDate)</td>
+    <td>
+
+    </td>
+</tr>
+    }
+</table>
+
+
